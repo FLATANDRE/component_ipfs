@@ -1,0 +1,8 @@
+# env-configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: env-config
+  namespace: ipfs
+data:
+  bootstrap-peer-id: UW1TNWN3YnhtR3lQaUVIM1NZTmdpQWF6RzQ2TnZvZ0t4ZngyaVg2anQ0ZWYxYQo=
