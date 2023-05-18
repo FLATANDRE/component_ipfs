@@ -3,12 +3,16 @@ kind: Service
 metadata:
   name: ipfs-cluster
   namespace: ipfs
-  annotations:
-      external-dns.alpha.kubernetes.io/hostname: change.me.com
   labels:
     app: ipfs-cluster
+  # annotations:
+  #   external-dns.alpha.kubernetes.io/hostname: change.me.com
+  
 spec:
-  type: LoadBalancer
+  #type: LoadBalancer
+  type: ClusterIP
+  selector:
+    app: ipfs-cluster
   ports:
     - name: swarm
       targetPort: swarm
@@ -31,5 +35,4 @@ spec:
     - name: cluster-swarm
       targetPort: cluster-swarm
       port: 9096
-  selector:
-    app: ipfs-cluster
+  

@@ -1,3 +1,4 @@
+kubectl delete -f ingress/
 kubectl delete -f statefulsets/
 kubectl delete -f deployments/
 kubectl delete -f rbac/

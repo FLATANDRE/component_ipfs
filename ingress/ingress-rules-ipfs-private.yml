@@ -1,0 +1,41 @@
+---
+# ingress-nginx IngressClass
+apiVersion: networking.k8s.io/v1
+kind: IngressClass
+metadata:
+  name: network-nginx
+  namespace: ipfs
+spec:
+  controller: k8s.io/ingress-nginx
+
+---
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-ipfs-access
+  namespace: ipfs
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /
+
+spec:
+  ingressClassName: network-nginx
+  rules:
+  - http:
+      paths:
+      - path: /ipfs-api-http
+        pathType: Prefix
+        backend:
+          service:
+            name: ipfs-cluster
+            port:
+              name: api-http
+      - path: /ipfs-ws
+        pathType: Prefix
+        backend:
+          service:
+            name: ipfs-cluster
+            port:
+              name: ws    
