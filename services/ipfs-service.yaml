@@ -15,24 +15,31 @@ spec:
     app: ipfs-cluster
   ports:
     - name: swarm
-      targetPort: swarm
+      targetPort: 4001
       port: 4001
+      protocol: TCP
     - name: swarm-udp
-      targetPort: swarm-udp
+      targetPort: 4002
       port: 4002
+      protocol: TCP
     - name: ws
-      targetPort: ws
+      targetPort: 8081
       port: 8081
+      protocol: TCP
     - name: http
-      targetPort: http
+      targetPort: 8080
       port: 8080
+      protocol: TCP
     - name: api-http
-      targetPort: api-http
+      targetPort: 9094
       port: 9094
+      protocol: TCP
     - name: proxy-http
-      targetPort: proxy-http
+      targetPort: 9095
       port: 9095
+      protocol: TCP
     - name: cluster-swarm
-      targetPort: cluster-swarm
+      targetPort: 9096
       port: 9096
+      protocol: TCP
   

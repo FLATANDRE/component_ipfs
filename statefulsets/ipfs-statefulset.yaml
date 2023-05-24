@@ -14,18 +14,10 @@ spec:
       labels:
         app: ipfs-cluster
     spec:
-      initContainers:
-        - name: configure-ipfs
-          image: "ipfs/go-ipfs:v0.4.18"
-          command: ["sh", "/custom/configure-ipfs.sh"]
-          volumeMounts:
-            - name: ipfs-storage
-              mountPath: /data/ipfs
-            - name: configure-script
-              mountPath: /custom
       containers:
         - name: ipfs
-          image: "ipfs/go-ipfs:v0.4.18"
+          #image: "ipfs/go-ipfs:v0.4.18"
+          image: "ipfs/go-ipfs:latest"
           imagePullPolicy: IfNotPresent
           env:
             - name: IPFS_FD_MAX
@@ -60,8 +52,8 @@ spec:
             periodSeconds: 30
             timeoutSeconds: 5
           volumeMounts:
-            - mountPath: /data/ipfs
-              name: ipfs-storage
+            - name: ipfs-storage
+              mountPath: /data/ipfs
             - name: configure-script
               mountPath: /custom
           resources:
@@ -70,15 +62,18 @@ spec:
           image: "ipfs/ipfs-cluster:latest"
           imagePullPolicy: IfNotPresent
           command: ["sh", "/custom/entrypoint.sh"]
-          envFrom:
-            - configMapRef:
-                name: env-config
+          #envFrom:
+          #  - configMapRef:
+          #      name: env-configmap
           env:
             - name: BOOTSTRAP_PEER_ID
               valueFrom:
-                configMapRef:
+              #  configMapRef:
+                  #name: env-config
+                  #key: bootstrap-peer-id
+                configMapKeyRef:
                   name: env-config
-                  key: bootstrap-peer-id
+                  key: bootstrap-peer-id 
             - name: BOOTSTRAP_PEER_PRIV_KEY
               valueFrom:
                 secretKeyRef:
@@ -123,12 +118,21 @@ spec:
               mountPath: /custom
           resources:
             {}
-
+      initContainers:
+        - name: configure-ipfs
+          #image: "ipfs/go-ipfs:v0.4.18"
+          image: "ipfs/go-ipfs:latest"
+          command: ["sh", "/custom/configure-ipfs.sh"]
+          volumeMounts:
+            - name: ipfs-storage
+              mountPath: /data/ipfs
+            - name: configure-script
+              mountPath: /custom
+                    
       volumes:
       - name: configure-script
         configMap:
           name: ipfs-cluster-set-bootstrap-conf
-
 
   volumeClaimTemplates:
     - metadata:
@@ -136,7 +140,7 @@ spec:
       spec:
         storageClassName: standard
         accessModes: ["ReadWriteOnce"]
-        persistentVolumeReclaimPolicy: Retain
+        #persistentVolumeReclaimPolicy: Retain        
         resources:
           requests:
             storage: 5Gi
@@ -145,7 +149,7 @@ spec:
       spec:
         storageClassName: standard
         accessModes: ["ReadWriteOnce"]
-        persistentVolumeReclaimPolicy: Retain
+        #persistentVolumeReclaimPolicy: Retain
         resources:
           requests:
             storage: 50Gi
