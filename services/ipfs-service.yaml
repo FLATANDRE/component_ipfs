@@ -1,45 +1,38 @@
+
 apiVersion: v1
 kind: Service
 metadata:
   name: ipfs-cluster
   namespace: ipfs
+  #annotations:
+  #    external-dns.alpha.kubernetes.io/hostname: change.me.com
   labels:
     app: ipfs-cluster
-  # annotations:
-  #   external-dns.alpha.kubernetes.io/hostname: change.me.com
-  
 spec:
-  #type: LoadBalancer
-  type: ClusterIP
-  selector:
-    app: ipfs-cluster
+  type: LoadBalancer
+  #type: ClusterIP
   ports:
     - name: swarm
-      targetPort: 4001
+      targetPort: swarm
       port: 4001
-      protocol: TCP
     - name: swarm-udp
-      targetPort: 4002
+      targetPort: swarm-udp
       port: 4002
-      protocol: TCP
     - name: ws
-      targetPort: 8081
+      targetPort: ws
       port: 8081
-      protocol: TCP
     - name: http
-      targetPort: 8080
+      targetPort: http
       port: 8080
-      protocol: TCP
     - name: api-http
-      targetPort: 9094
+      targetPort: api-http
       port: 9094
-      protocol: TCP
     - name: proxy-http
-      targetPort: 9095
+      targetPort: proxy-http
       port: 9095
-      protocol: TCP
     - name: cluster-swarm
-      targetPort: 9096
+      targetPort: cluster-swarm
       port: 9096
-      protocol: TCP
-  
+  selector:
+    app: ipfs-cluster
+

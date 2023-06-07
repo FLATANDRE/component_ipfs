@@ -16,8 +16,8 @@ metadata:
   name: ingress-ipfs-access
   namespace: ipfs
   annotations:
-    #nginx.ingress.kubernetes.io/ssl-redirect: "false"
-    #nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/use-regex: "true"
     nginx.ingress.kubernetes.io/rewrite-target: /
 
 spec:
@@ -32,6 +32,13 @@ spec:
             name: ipfs-cluster
             port:
               name: api-http
+      - path: /ipfs-api
+        pathType: Prefix
+        backend:
+          service:
+            name: ipfs-cluster
+            port:
+              name: proxy-http
       - path: /ipfs-ws
         pathType: Prefix
         backend:
@@ -39,3 +46,10 @@ spec:
             name: ipfs-cluster
             port:
               name: ws    
+      - path: /ipfs-web
+        pathType: Prefix
+        backend:
+          service:
+            name: ipfs-cluster
+            port:
+              name: http    
