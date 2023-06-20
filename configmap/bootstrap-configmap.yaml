@@ -11,8 +11,7 @@ data:
     # This is a custom entrypoint for k8s designed to connect to the bootstrap
     # node running in the cluster. It has been set up using a configmap to
     # allow changes on the fly.
-
-
+    
     if [ ! -f /data/ipfs-cluster/service.json ]; then
       ipfs-cluster-service init
     fi
@@ -21,6 +20,9 @@ data:
     # accept cluster api requests from outside
     sed -i s~/ip4/127.0.0.1/tcp/9095~/ip4/0.0.0.0/tcp/9095~ /data/ipfs-cluster/service.json
     sed -i s~/ip4/127.0.0.1/tcp/9094~/ip4/0.0.0.0/tcp/9094~ /data/ipfs-cluster/service.json
+
+    # adding new method to allowed methos of rest api
+    sed -i s~\"GET\"~\"GET\",\"POST\",\"PUT\"~ /data/ipfs-cluster/service.json
 
     PEER_HOSTNAME=`cat /proc/sys/kernel/hostname`
 
