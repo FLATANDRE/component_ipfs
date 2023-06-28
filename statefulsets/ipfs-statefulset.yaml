@@ -89,17 +89,7 @@ spec:
             - name: CLUSTER_MONITOR_PING_INTERVAL
               value: "3m"            
             - name: SVC_NAME
-              value: $(CLUSTER_SVC_NAME)
-            #- name: CLUSTER_RESTAPI_HTTPLISTENMULTIADDRESS
-            #  value: "/ip4/0.0.0.0/tcp/9094"
-            #- name: CLUSTER_IPFSPROXY_NODEMULTIADDRESS
-            #  value: "/ip4/0.0.0.0/tcp/5001"
-            #- name: CLUSTER_IPFSPROXY_LISTENMULTIADDRESS
-            #  value: "/ip4/0.0.0.0/tcp/9095"
-            #- name: CLUSTER_IPFSHTTP_LISTENMULTIADDRESS
-            #  value: "/ip4/0.0.0.0/tcp/9094"
-            #- name: CLUSTER_IPFSHTTP_NODEMULTIADDRESS
-            #  value: "/ip4/0.0.0.0/tcp/5001"
+              value: $(CLUSTER_SVC_NAME)            
           ports:
             - name: api-http
               containerPort: 9094
