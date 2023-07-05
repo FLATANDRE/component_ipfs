@@ -22,11 +22,8 @@ data:
     sed -i s~/ip4/127.0.0.1/tcp/9094~/ip4/0.0.0.0/tcp/9094~ /data/ipfs-cluster/service.json
 
     # adding new method to allowed methos of rest api
-    sed -i s~\"GET\"~\"GET\",\"POST\",\"PUT\"~ /data/ipfs-cluster/service.json
-
-    # adding config for ipfs http component
-    sed -i '/ipfshttp/a \"listen_multiaddress\":\"/ip4/0.0.0.0/tcp/9095\"\,' /data/ipfs-cluster/service.json
-    
+    sed -i s~\"GET\"~\"GET\",\"POST\",\"PUT\",\"DELETE\"~ /data/ipfs-cluster/service.json
+   
     PEER_HOSTNAME=`cat /proc/sys/kernel/hostname`
 
     grep -q ".*ipfs-cluster-0.*" /proc/sys/kernel/hostname
